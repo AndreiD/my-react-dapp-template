@@ -12,41 +12,41 @@ const Contact = () => {
 
         <div className="row">
 
-          <h2 class="title">Thank you</h2>
+          <h2 className="title">Thank you</h2>
 
-          <div class="content">
+          <div className="content">
             <h5>Thank you for contacting us.</h5>
           </div>
 
         </div>
 
 
-        <div class="col s12 l6">
+        <div className="col s12 l6">
 
-          <div class="card-panel red white-text">Your email is required.</div>
-          <form method="POST" class="card-panel" id="suggest-form">
+          <div className="card-panel red white-text">Your email is required.</div>
+          <form method="POST" className="card-panel" id="suggest-form">
 
-            <div class="row">
-              <div class="input-field col s12">
-                <input id="email" type="email" name="email" class="validate" value="" />
+            <div className="row">
+              <div className="input-field col s12">
+                <input id="email" type="email" name="email" className="validate" value="" />
                 <label for="email">Email</label>
               </div>
             </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <input pid="name" type="text" name="name" class="validate" value="" />
+            <div className="row">
+              <div className="input-field col s12">
+                <input pid="name" type="text" name="name" className="validate" value="" />
                 <label for="name">Name</label>
               </div>
             </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <input id="city" type="text" name="shop_city" class="validate" value="" />
+            <div className="row">
+              <div className="input-field col s12">
+                <input id="city" type="text" name="shop_city" className="validate" value="" />
                 <label for="city">Message</label>
               </div>
             </div>
-            <div class="row">
-              <div class="col s12 right-align">
-                <button class="btn-large green" type="submit" name="action" value="suggests">Submit</button>
+            <div className="row">
+              <div className="col s12 right-align">
+                <button className="btn-large green" type="submit" name="action" value="suggests">Submit</button>
               </div>
             </div>
           </form>

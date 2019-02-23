@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Web3 from 'web3'
 import UnlockMetamask from './metamask/UnlockMetamask'
 import InstallMetamask from './metamask/InstallMetamask'
+import AccountNetworkCard from './info/AccountNetworkCard'
 
 let web3 = window.web3;
 
@@ -72,38 +73,29 @@ class Home extends Component {
   }
 
 
-
-
   render() {
-
-    if (this.isWeb3) {
-      if (this.isWeb3Locked) {
-        return (
-          <UnlockMetamask message="Please Unlock Your Metamask/Mist Wallet" />
-        )
-      } else {
-        return (
-          <div className="row">
-            <div className="col s6 offset-s3">
-              <div className="card-panel blue-grey darken-1">
-                <div className="card-content white-text">
-                  <span className="card-title">Connected to: {this.state.networkName}</span>
-                  {this.state.account && <p>Account: {this.state.account}</p>}
-                </div>
-
-              </div>
-            </div>
-          </div>
-        )
-      }
-    } else {
+    // if metamask needs to be installed
+    if (!this.isWeb3) {
       return (
         <InstallMetamask />
       )
     }
+
+    // if metamask is locked
+    if (this.isWeb3Locked) {
+      return (
+        <UnlockMetamask message="Please Unlock Your Metamask/Mist Wallet" />
+      )
+    }
+
+    return (
+      <div>
+        <AccountNetworkCard account={this.state.account} networkName={this.state.networkName} />
+      </div>
+    )
+
   }
-
-
 }
+
 
 export default Home;
