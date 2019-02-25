@@ -3,6 +3,9 @@ import Web3 from 'web3'
 import UnlockMetamask from './metamask/UnlockMetamask'
 import InstallMetamask from './metamask/InstallMetamask'
 import AccountNetworkCard from './info/AccountNetworkCard'
+import Badges from './contract/Badges'
+import { connect } from 'react-redux'
+
 
 let web3 = window.web3;
 
@@ -11,12 +14,6 @@ class Home extends Component {
     super();
     this.isWeb3 = true; //If metamask is installed
     this.isWeb3Locked = false; //If metamask account is locked
-
-    this.state = {
-      networkName: 'Checking...',
-      account: null,  //address of the currently unlocked metamask
-    }
-
 
 
     if (typeof web3 !== 'undefined') {
@@ -37,40 +34,42 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.isWeb3Locked = true;
-    web3.currentProvider.publicConfigStore.on('update', this.metamaskUpdateCallback);
-  }
-
-  metamaskUpdateCallback = ({ selectedAddress, networkVersion }) => {
-
-    this.isWeb3 = true;
-    this.isWeb3Locked = false;
-
-    let networkName, that = this;
-    console.log()
-    switch (networkVersion) {
-      case "1":
-        networkName = "Main";
-        break;
-      case "2":
-        networkName = "Morden";
-        break;
-      case "3":
-        networkName = "Ropsten";
-        break;
-      case "4":
-        networkName = "Rinkeby";
-        break;
-      case "42":
-        networkName = "Kovan";
-        break;
-      default:
-        networkName = networkVersion;
-    }
-
-    that.setState({ networkName: networkName, account: selectedAddress })
+    this.props.initMetamask();
+    // this.isWeb3Locked = true;
+    // web3.currentProvider.publicConfigStore.on('update', this.metamaskUpdateCallback);
 
   }
+
+  // metamaskUpdateCallback = ({ selectedAddress, networkVersion }) => {
+
+  //   this.isWeb3 = true;
+  //   this.isWeb3Locked = false;
+
+  //   let networkName, that = this;
+  //   console.log()
+  //   switch (networkVersion) {
+  //     case "1":
+  //       networkName = "Main";
+  //       break;
+  //     case "2":
+  //       networkName = "Morden";
+  //       break;
+  //     case "3":
+  //       networkName = "Ropsten";
+  //       break;
+  //     case "4":
+  //       networkName = "Rinkeby";
+  //       break;
+  //     case "42":
+  //       networkName = "Kovan";
+  //       break;
+  //     default:
+  //       networkName = networkVersion;
+  //   }
+
+  //   that.setState({ networkName: networkName, account: selectedAddress })
+
+  // }
 
 
   render() {
@@ -89,13 +88,29 @@ class Home extends Component {
     }
 
     return (
-      <div>
-        <AccountNetworkCard account={this.state.account} networkName={this.state.networkName} />
+      <div className="section">
+        <AccountNetworkCard account={this.props.account} networkName={this.props.networkName} />
+        <Badges badges={this.props.badges} />
       </div>
+
     )
 
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    networkName: state.networkName,
+    account: state.account,  //address of the currently unlocked metamask
+    badges: state.badges
+  }
+}
 
-export default Home;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    initMetamask: () => { dispatch({ type: "INIT_METAMASK" }) },
+    //funcname(param) = { dispatch({type:"WHAT", other: param})}
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
