@@ -7,9 +7,8 @@ function Contract(props) {
   }
   return (
     <div className="container">
-      <div className="row">
-        <h3>Token Amount....</h3>
-        <p>=> {props.tokenAmount}</p>
+      <div className="row center">
+        <h3>Total {props.tokenAmount}</h3>
       </div>
     </div>
   )

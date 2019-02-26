@@ -12,7 +12,7 @@ let web3 = window.web3;
 class Home extends Component {
   constructor() {
     super();
-    this.isWeb3 = true; //If metamask is installed
+    this.isWeb3Installed = true; //If metamask is installed
     this.isWeb3Locked = false; //If metamask account is locked
 
     this.state = {
@@ -24,15 +24,8 @@ class Home extends Component {
       this.web3Provider = web3.currentProvider;
       this.web3 = new Web3(web3.currentProvider);
 
-      // this.tokenZendr = TruffleContract(TokenZendR);
-      //this.tokenZendr.setProvider(this.web3Provider);
-
-      if (web3.eth.coinbase === null) {
-        this.isWeb3Locked = true;
-      }
-
     } else {
-      this.isWeb3 = false;
+      this.isWeb3Installed = false;
     }
 
   }
@@ -75,7 +68,7 @@ class Home extends Component {
 
   render() {
     // if metamask needs to be installed
-    if (!this.isWeb3) {
+    if (!this.isWeb3Installed) {
       return (
         <InstallMetamask />
       )

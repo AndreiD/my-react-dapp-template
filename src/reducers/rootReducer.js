@@ -1,5 +1,9 @@
-import { MIN_ABI } from '../components/contract/abi';
-import { CONTRACT_ADDRESS } from '../components/contract/constants';
+import {
+  MIN_ABI
+} from '../components/contract/abi';
+import {
+  CONTRACT_ADDRESS
+} from '../components/contract/constants';
 
 const initalState = {
   tokenAmount: null
@@ -7,7 +11,9 @@ const initalState = {
 
 
 const rootReducer = (state = initalState, action) => {
-  const newState = { ...state };
+  const newState = {
+    ...state
+  };
   console.log("reducer: newState =", newState, " action =", action)
 
   switch (action.type) {
@@ -31,13 +37,6 @@ const rootReducer = (state = initalState, action) => {
         ...state,
         tokenAmount: "1.23"
       }
-
-    // case "AGE_DOWN":
-    //   return {
-    //     ...state,
-    //     age: state.age - action.value,
-    //     history: state.history.concat({ age: state.age + action.value, id: Math.random() })
-    //   }
     default:
       break;
   }
