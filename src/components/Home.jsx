@@ -5,6 +5,7 @@ import InstallMetamask from './metamask/InstallMetamask'
 import AccountNetworkCard from './info/AccountNetworkCard'
 import Contract from './contract/Contract'
 import { connect } from 'react-redux'
+import { loadTokenAmount } from '../actions/blockchainActions'
 
 
 let web3 = window.web3;
@@ -62,7 +63,7 @@ class Home extends Component {
     }
 
     that.setState({ networkName: networkName, account: selectedAddress })
-    this.props.loadTokenAmount(selectedAddress);
+    this.props.loadTokenBalance(selectedAddress);
   }
 
 
@@ -100,7 +101,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadTokenAmount: (account) => { dispatch({ type: "LOAD_TOKEN_AMOUNT", web3, account }) }
+    loadTokenBalance: (account) => { dispatch(loadTokenAmount(account)) }
   }
 }
 
