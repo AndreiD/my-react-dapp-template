@@ -6,7 +6,7 @@ import AccountNetworkCard from './info/AccountNetworkCard'
 import Contract from './contract/Contract'
 import { connect } from 'react-redux'
 import { loadTokenAmount } from '../actions/blockchainActions'
-
+import getWeb3 from '../utils/getWeb3'
 
 let web3 = window.web3;
 
@@ -14,7 +14,7 @@ class Home extends Component {
   constructor() {
     super();
     this.isWeb3Installed = true; //If metamask is installed
-    this.isWeb3Locked = false; //If metamask account is locked
+    this.isWeb3Locked = true; //If metamask account is locked
 
     this.state = {
       networkName: 'Checking...',
@@ -38,8 +38,6 @@ class Home extends Component {
 
   metamaskUpdateCallback = ({ selectedAddress, networkVersion }) => {
 
-    this.isWeb3 = true;
-    this.isWeb3Locked = false;
 
     let networkName, that = this;
     switch (networkVersion) {
@@ -62,6 +60,9 @@ class Home extends Component {
         networkName = networkVersion;
     }
 
+
+    this.isWeb3 = true;
+    this.isWeb3Locked = false;
     that.setState({ networkName: networkName, account: selectedAddress })
     this.props.loadTokenBalance(selectedAddress);
   }
@@ -101,7 +102,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadTokenBalance: (account) => { dispatch(loadTokenAmount(account)) }
+    loadTokenBalance: (account) => { dispatch(loadTokenAmount(account, this.web3)) }
   }
 }
 

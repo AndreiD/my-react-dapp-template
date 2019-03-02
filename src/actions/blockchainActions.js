@@ -7,9 +7,10 @@ import {
 
 export const loadTokenAmount = ({
   account
-
 }) => {
   return (dispatch) => {
+
+
 
     // async
     console.log(">>>> DO ASYNC STUFF HERE!")
@@ -17,8 +18,8 @@ export const loadTokenAmount = ({
     console.log(this.account)
 
 
-    // var version = web3.version.api;
-    // console.log(version); // "0.2.0"
+    var version = web3.version.api;
+    console.log("web3 version", version); // "0.2.0"
 
     // let contract = web3.eth.contract(MIN_ABI).at(CONTRACT_ADDRESS);
     // contract.balanceOf(account, (error, balance) => {
