@@ -1,109 +1,83 @@
-import React, { Component } from 'react';
-import Web3 from 'web3'
-import UnlockMetamask from './metamask/UnlockMetamask'
-import InstallMetamask from './metamask/InstallMetamask'
-import AccountNetworkCard from './info/AccountNetworkCard'
-import Contract from './contract/Contract'
-import { connect } from 'react-redux'
-import { loadTokenAmount } from '../actions/blockchainActions'
-import getWeb3 from '../utils/getWeb3'
+import React from 'react';
+import { connect } from "react-redux";
+import * as actionCreator from '../actions/fetchAction'
+import { Formik, Form, Field } from 'formik'
+import { TextField } from 'material-ui-formik-components'
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
-let web3 = window.web3;
-
-class Home extends Component {
-  constructor() {
-    super();
-    this.isWeb3Installed = true; //If metamask is installed
-    this.isWeb3Locked = true; //If metamask account is locked
-
-    this.state = {
-      networkName: 'Checking...',
-      account: null,  //address of the currently unlocked metamask
-    }
-
-    if (typeof web3 !== 'undefined') {
-      this.web3Provider = web3.currentProvider;
-      this.web3 = new Web3(web3.currentProvider);
-
-    } else {
-      this.isWeb3Installed = false;
-    }
-
-  }
-
-  componentDidMount() {
-    this.isWeb3Locked = true;
-    web3.currentProvider.publicConfigStore.on('update', this.metamaskUpdateCallback);
-  }
-
-  metamaskUpdateCallback = ({ selectedAddress, networkVersion }) => {
+const style = {
+  Paper: { padding: 20, margin: 20 }
+}
 
 
-    let networkName, that = this;
-    switch (networkVersion) {
-      case "1":
-        networkName = "Main";
-        break;
-      case "2":
-        networkName = "Morden";
-        break;
-      case "3":
-        networkName = "Ropsten";
-        break;
-      case "4":
-        networkName = "Rinkeby";
-        break;
-      case "42":
-        networkName = "Kovan";
-        break;
-      default:
-        networkName = networkVersion;
-    }
+const initialValues = {
+  username: ''
+}
 
-
-    this.isWeb3 = true;
-    this.isWeb3Locked = false;
-    that.setState({ networkName: networkName, account: selectedAddress })
-    this.props.loadTokenBalance(selectedAddress);
-  }
-
+class Home extends React.Component {
 
   render() {
-    // if metamask needs to be installed
-    if (!this.isWeb3Installed) {
-      return (
-        <InstallMetamask />
-      )
-    }
-
-    // if metamask is locked
-    if (this.isWeb3Locked) {
-      return (
-        <UnlockMetamask message="Please Unlock Your Metamask/Mist Wallet" />
-      )
-    }
-
     return (
-      <div className="section">
-        <AccountNetworkCard account={this.state.account} networkName={this.state.networkName} />
-        <Contract tokenAmount={this.props.tokenAmount} />
+      <div className="App">
+        <Grid
+          container
+          spacing={0}
+          alignItems="center"
+          justify="center"
+        >
+          <Grid item xs={4}>
+            <Formik
+              initialValues={initialValues}
+              validateOnBlur={false}
+              validateOnChange
+              onSubmit={values => {
+                this.props.getUserData(values.username)
+              }}
+              render={props => (
+                <Paper style={style.Paper}>
+                  <Form noValidate autoComplete='off'>
+                    <Field
+                      required
+                      name='username'
+                      label='Username'
+                      component={TextField}></Field>
+                    <Button variant="contained" color="primary" type='submit'><i className="material-icons">search</i> Submit</Button>
+                  </Form>
+                </Paper>
+              )}
+            />
+            {this.props.isFetching ? <h3>Loading...</h3> : null}
+            {this.props.errorMessage ? (
+              <h3 className="error">{this.props.errorMessage}</h3>
+            ) : null}
+            {Object.keys(this.props.userData).length > 0 ? (
+              <p>{JSON.stringify(this.props.userData)}</p>
+            ) : null}
+          </Grid>
+        </Grid>
       </div>
-
-    )
-
+    );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+
+const mapStateToProps = state => {
   return {
-    tokenAmount: state.tokenAmount
-  }
-}
+    userData: state.reducerA.userData,
+    isFetching: state.reducerA.isFetching,
+    errorMessage: state.reducerA.errorMessage
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispachToProps = dispatch => {
   return {
-    loadTokenBalance: (account) => { dispatch(loadTokenAmount(account, this.web3)) }
-  }
-}
+    getUserData: (username) => dispatch(actionCreator.fetchGithubData(username))
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(
+  mapStateToProps,
+  mapDispachToProps
+)(Home);
