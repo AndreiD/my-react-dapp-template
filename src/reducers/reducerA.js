@@ -1,5 +1,5 @@
 const initialState = {
-  userData: {},
+  ethData: {},
   isFetching: false,
   errorMessage: null
 };
@@ -7,9 +7,9 @@ const initialState = {
 const reducerA = (state = initialState, action) => {
   console.log("action type => ", action.type)
   switch (action.type) {
-    case "FETCHED_USER_DATA":
+    case "FETCHED_ETH_DATA":
       return Object.assign({}, state, {
-        userData: action.data,
+        ethData: action.data,
         isFetching: false,
         errorMessage: null
       });

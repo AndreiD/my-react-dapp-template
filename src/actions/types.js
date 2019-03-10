@@ -1,0 +1,4 @@
+export const WEB3_CONNECTED = 'WEB3_CONNECTED'
+export const WEB3_ERROR = 'WEB3_ERROR'
+export const WEB3_ACCOUNT_CHANGE = 'WEB3_ACCOUNT_CHANGE'
+export const SET_ERROR = 'SET_ERROR'

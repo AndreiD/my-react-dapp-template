@@ -9,12 +9,6 @@ setConfig({
   pureRender: true, // RHL will not change render method
 })
 
-const styles = {
-  stickToBottom: {
-
-  },
-};
-
 class App extends Component {
   render() {
     return (

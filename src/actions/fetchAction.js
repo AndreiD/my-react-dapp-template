@@ -1,4 +1,6 @@
 import axios from 'axios';
+import Web3 from "web3";
+
 
 const baseUrl = 'https://api.github.com/users/';
 
@@ -12,13 +14,16 @@ export const received_error = (data) => {
 
 export const fetchedData = (data) => {
   return {
-    type: "FETCHED_USER_DATA",
+    type: "FETCHED_ETH_DATA",
     data
   }
 };
 
-export const fetchGithubData = (username) => {
+export const getEthBalance = (username) => {
   return (dispatch) => {
+    console.log(Web3)
+
+
     return axios.get(baseUrl + username)
       .then(response => {
         console.log('response in fetch', response)

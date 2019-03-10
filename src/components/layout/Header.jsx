@@ -30,7 +30,7 @@ function Header(props) {
         <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
           <i className="material-icons">cloud</i>
         </IconButton>
-        <Typography variant="h6" color="inherit" className={classes.grow}>
+        <Typography variant="title" color="inherit" className={classes.grow}>
           your super dapp
       </Typography>
         <Button className={classes.button} color="inherit"><i className="material-icons">person</i>action</Button>
