@@ -1,6 +1,9 @@
 import axios from 'axios';
 import Web3 from "web3";
 
+/**
+ * Example Actions for REST APIs
+ */
 
 const baseUrl = 'https://api.github.com/users/';
 

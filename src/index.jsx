@@ -11,14 +11,16 @@ import {
   applyMiddleware,
   combineReducers
 } from 'redux'
-import reducerA from './reducers/reducerA'
+import reducerSample from './reducers/reducerSample'
+import reducerWeb3 from './reducers/reducerWeb3'
 import thunk from 'redux-thunk'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core'
 import { red } from '@material-ui/core/colors'
 import lightBlue from '@material-ui/core/colors/lightBlue';
 
 const rootReducer = combineReducers({
-  reducerA
+  reducerSample,
+  reducerWeb3
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

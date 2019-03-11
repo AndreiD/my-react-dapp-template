@@ -5,7 +5,6 @@ const initialState = {
 };
 
 const reducerA = (state = initialState, action) => {
-  console.log("action type => ", action.type)
   switch (action.type) {
     case "FETCHED_ETH_DATA":
       return Object.assign({}, state, {

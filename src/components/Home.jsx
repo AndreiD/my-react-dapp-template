@@ -1,16 +1,15 @@
 import React from 'react';
 import { connect } from "react-redux";
-import * as actionCreator from '../actions/fetchAction'
+import * as actionCreator from '../actions/web3Actions'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'material-ui-formik-components'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import getWeb3 from '../utils/getWeb3'
-
-const style = {
-  Paper: { padding: 20, margin: 20 }
-}
+import Typography from '@material-ui/core/Typography';
+import BalanceCard from './contract/BalanceCard';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 
 const initialValues = {
@@ -21,7 +20,6 @@ class Home extends React.Component {
 
   async componentDidMount() {
     const web3 = await getWeb3();
-    console.log('web3 = ', web3)
     web3.currentProvider.publicConfigStore.on('update', this.metamaskUpdateCallback);
 
   }
@@ -35,6 +33,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="App">
+
         <Grid
           container
           spacing={0}
@@ -47,28 +46,32 @@ class Home extends React.Component {
               validateOnBlur={false}
               validateOnChange
               onSubmit={values => {
-                this.props.getEthData(values.eth_address)
+                this.props.getTokenBalance(values.eth_address)
               }}
               render={props => (
-                <Paper style={style.Paper}>
-                  <Form noValidate autoComplete='off'>
-                    <Field
-                      required
-                      name='eth_address'
-                      label='Eth Address'
-                      component={TextField}></Field>
-                    <Button variant="contained" color="primary" type='submit'><i className="material-icons">search</i> Get Balance</Button>
-                  </Form>
-                </Paper>
+
+                <Card style={{ marginTop: "30px" }}>
+                  <CardContent>
+
+                    <Typography variant="h6">Get the balance for AndysToken</Typography>
+                    <Form noValidate autoComplete='off'>
+                      <Field
+                        required
+                        name='eth_address'
+                        label='Eth Address'
+                        component={TextField}></Field>
+                      <Button variant="contained" color="primary" type='submit'><i className="material-icons">search</i> Get Balance</Button>
+                    </Form>
+
+                  </CardContent>
+                </Card>
               )}
             />
             {this.props.isFetching ? <h3>Loading...</h3> : null}
             {this.props.errorMessage ? (
               <h3 className="error">{this.props.errorMessage}</h3>
             ) : null}
-            {Object.keys(this.props.ethData).length > 0 ? (
-              <p>{JSON.stringify(this.props.ethData)}</p>
-            ) : null}
+            <BalanceCard tokenAmount={this.props.tokenBalance} />
           </Grid>
         </Grid>
       </div>
@@ -79,15 +82,15 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    ethData: state.reducerA.ethData,
-    isFetching: state.reducerA.isFetching,
-    errorMessage: state.reducerA.errorMessage
+    tokenBalance: state.reducerWeb3.tokenBalance,
+    isFetching: state.reducerWeb3.isFetching,
+    errorMessage: state.reducerWeb3.errorMessage
   };
 };
 
 const mapDispachToProps = dispatch => {
   return {
-    getEthData: (ethAddress) => dispatch(actionCreator.getEthBalance(ethAddress))
+    getTokenBalance: (ethAddress) => dispatch(actionCreator.getEthBalance(ethAddress))
   };
 };
 
