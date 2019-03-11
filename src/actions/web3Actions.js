@@ -16,7 +16,7 @@ export const getEthBalance = (address) => {
   return (dispatch) => {
     window.web3.eth.getBalance(address, function (error, wei) {
       if (!error) {
-        var balance = window.web3.utils.fromWei(wei, 'ether');
+        var balance = window.web3.fromWei(wei, 'ether');
         console.log(balance + " ETH");
       }
     });
