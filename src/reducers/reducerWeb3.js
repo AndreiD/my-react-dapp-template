@@ -1,6 +1,6 @@
 const initialState = {
   tokenBalance: null,
-  isFetching: false,
+  isLoading: false,
   errorMessage: null
 };
 
@@ -9,12 +9,12 @@ const reducerWeb3 = (state = initialState, action) => {
     case "FETCHED_TOKEN_BALANCE":
       return Object.assign({}, state, {
         tokenBalance: action.data,
-        isFetching: false,
+        isLoading: false,
         errorMessage: null
       });
     case "RECEIVED_ERROR":
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         errorMessage: action.data
       });
     default:

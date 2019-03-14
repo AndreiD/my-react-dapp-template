@@ -1,23 +1,25 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 
 function BalanceCard(props) {
   if (props.tokenAmount === null) {
     return null
   }
   return (
-    <Card style={{ marginTop: "30px" }}>
-      <CardContent>
-        <Typography color="textSecondary" gutterBottom>
-          Served from the blockchain
-        </Typography>
-        <Typography variant="h5" component="h2">
-          Total {props.tokenAmount}
-        </Typography>
-      </CardContent>
-    </Card>
+    <div class="row">
+      <div class="col s12 m6">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">
+              Served from the blockchain
+        </span>
+
+            <p>
+              Total {props.tokenAmount}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
 const initialState = {
   ethData: {},
-  isFetching: false,
+  isLoading: false,
   errorMessage: null
 };
 
@@ -9,12 +9,12 @@ const reducerA = (state = initialState, action) => {
     case "FETCHED_ETH_DATA":
       return Object.assign({}, state, {
         ethData: action.data,
-        isFetching: false,
+        isLoading: false,
         errorMessage: null
       });
     case "RECEIVED_ERROR":
       return Object.assign({}, state, {
-        isFetching: false,
+        isLoading: false,
         errorMessage: action.data
       });
     default:

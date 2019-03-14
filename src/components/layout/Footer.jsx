@@ -1,12 +1,11 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography';
 
 function Footer() {
   return (
     <div className="footer">
-      <Typography variant="overline" align="center" gutterBottom color="textSecondary">
+      <div className="container">
         dapp powered by Ξ
-      </Typography>
+      </div>
     </div>
   )
 }

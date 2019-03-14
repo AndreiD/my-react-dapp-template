@@ -14,6 +14,10 @@ export const fetchedBalance = (data) => {
 
 export const getEthBalance = (address) => {
   return (dispatch) => {
+    if (!address || 0 === address.address) {  // replace with web3.utils.isAddress
+      dispatch(received_error("Invalid ETH address"))
+      return
+    }
     window.web3.eth.getBalance(address, function (error, wei) {
       if (!error) {
         var balance = window.web3.fromWei(wei, 'ether');
@@ -22,6 +26,8 @@ export const getEthBalance = (address) => {
     });
   }
 }
+
+
 
 // export function getEthBalance(address) {
 //   console.log("Address - ", address)
