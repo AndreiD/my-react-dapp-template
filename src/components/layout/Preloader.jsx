@@ -6,7 +6,7 @@ export default function Preloader({ show }) {
   }
 
   return (
-    <div className="xcentered">
+    <div className="container center-align" style={{ marginTop: '50px' }}>
       <div className="preloader-wrapper big active">
         <div className="spinner-layer spinner-blue">
           <div className="circle-clipper left">

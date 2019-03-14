@@ -6,16 +6,17 @@ const initialState = {
 
 const reducerA = (state = initialState, action) => {
   switch (action.type) {
-    case "FETCHED_ETH_DATA":
+    case "WHAT":
       return Object.assign({}, state, {
-        ethData: action.data,
+        ethData: action.payload,
         isLoading: false,
         errorMessage: null
       });
     case "RECEIVED_ERROR":
       return Object.assign({}, state, {
+        ethData: {},
         isLoading: false,
-        errorMessage: action.data
+        errorMessage: action.payload
       });
     default:
       return state;

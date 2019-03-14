@@ -1,20 +1,19 @@
 import React from 'react';
 
 function BalanceCard(props) {
-  if (props.tokenAmount === null) {
+  if (props.tokenBalance === null) {
     return null
   }
   return (
-    <div class="row">
-      <div class="col s12 m6">
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <span class="card-title">
-              Served from the blockchain
+    <div className="row">
+      <div className="col s12 m12">
+        <div className="card blue-grey darken-1">
+          <div className="card-content white-text">
+            <span className="card-title">
+              from the blockchain
         </span>
-
             <p>
-              Total {props.tokenAmount}
+              Total {props.tokenBalance}
             </p>
           </div>
         </div>

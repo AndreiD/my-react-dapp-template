@@ -1,52 +1,38 @@
-export const received_error = (data) => {
-  return {
-    type: "RECEIVED_ERROR",
-    data
-  };
-};
-
-export const fetchedBalance = (data) => {
-  return {
-    type: "FETCHED_TOKEN_BALANCE",
-    data
-  }
-};
+import Web3 from "web3";
 
 export const getEthBalance = (address) => {
-  return (dispatch) => {
-    if (!address || 0 === address.address) {  // replace with web3.utils.isAddress
-      dispatch(received_error("Invalid ETH address"))
-      return
+  return dispatch => {
+
+    dispatch({
+      type: "SET_LOADING",
+      payload: true,
+    });
+
+    const web3 = new Web3(window.web3.currentProvider);
+    if (!web3.utils.isAddress(address)) {
+      return dispatch({
+        type: "RECEIVED_ERROR",
+        payload: "Invalid ETH address",
+      });
     }
-    window.web3.eth.getBalance(address, function (error, wei) {
+
+
+    web3.eth.getBalance(address, function (error, wei) {
       if (!error) {
         var balance = window.web3.fromWei(wei, 'ether');
-        console.log(balance + " ETH");
+        return dispatch({
+          type: "FETCHED_TOKEN_BALANCE",
+          payload: balance + " Tokens",
+        });
+      } else {
+        return dispatch({
+          type: "RECEIVED_ERROR",
+          payload: error.toString(),
+        });
       }
     });
   }
 }
-
-
-
-// export function getEthBalance(address) {
-//   console.log("Address - ", address)
-//   return async dispatch => {
-//     try {
-//       await getWeb3().then(wee => {
-//         console.log('success ', wee)
-//       }).catch(error => {
-//         console.log('error', error)
-//       })
-
-//       dispatch(fetchedBalance("123 ETH"))
-//     } catch (error) {
-//       dispatch(received_error(error.toString()))
-//       throw (error);
-//     }
-//   };
-// };
-
 
 
 // import contract from 'adhi-contract'

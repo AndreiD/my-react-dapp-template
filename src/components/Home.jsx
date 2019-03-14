@@ -8,9 +8,6 @@ import M from 'materialize-css'
 import Preloader from './layout/Preloader'
 import Error from './layout/Error'
 
-const initialValues = {
-  eth_address: ''
-}
 
 class Home extends React.Component {
 
@@ -18,7 +15,6 @@ class Home extends React.Component {
     M.AutoInit(); // carefull with this one
     const web3 = await getWeb3();
     web3.currentProvider.publicConfigStore.on('update', this.metamaskUpdateCallback);
-
   }
 
   metamaskUpdateCallback = ({ selectedAddress, networkVersion }) => {
@@ -30,13 +26,11 @@ class Home extends React.Component {
   render() {
     return (
       <div className="container">
-
         <div className="row">
           <div className="col m6 offset-m3 s12">
+
             <Formik
-              initialValues={initialValues}
-              validateOnBlur={false}
-              validateOnChange
+              initialValues={{ eth_address: '' }}
               onSubmit={values => {
                 this.props.getTokenBalance(values.eth_address)
               }}
@@ -57,7 +51,7 @@ class Home extends React.Component {
                             type="text"></Field>
                         </div>
                         <div className="col s12">
-                          <button className="waves-effect green waves-light btn" type='submit'><i className="material-icons left">search</i> Get Balance</button>
+                          <p className="right-align"><button className="waves-effect green waves-light btn" type='submit'><i className="material-icons left">search</i> Get Balance</button></p>
                         </div>
                       </div>
                     </Form>
@@ -67,12 +61,12 @@ class Home extends React.Component {
 
               )}
             />
-            <BalanceCard tokenAmount={this.props.tokenBalance} />
+
+            <BalanceCard tokenBalance={this.props.tokenBalance} />
             <Error errorMessage={this.props.errorMessage} />
             <Preloader show={this.props.isLoading} />
 
           </div>
-
         </div>
       </div >
     );
