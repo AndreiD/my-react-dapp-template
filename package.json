@@ -1,6 +1,7 @@
 {
   "name": "mydapptemplate",
   "version": "0.1.0",
+  "description": "This repository has ...",
   "private": true,
   "dependencies": {
     "formik": "^1.5.1",
