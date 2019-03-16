@@ -1,8 +1,8 @@
 # My React DAPP Template :zap:
 
-## not production ready, just me, playing with coding
+## still... some things can be improved
 
-fell free to use it, if you'd like
+if you have any suggestions for improvement, please use the issues
 
 ~~~~
   "dependencies": {
