@@ -8,6 +8,9 @@ import {
 } from './types'
 import getNetworkName from "../utils/other";
 
+
+
+
 export const web3Connect = () => async (dispatch) => {
   try {
     const web3 = await getWeb3();
@@ -34,8 +37,6 @@ export const web3Connect = () => async (dispatch) => {
     });
   }
 }
-
-
 
 
 export const getEthBalance = (address) => {

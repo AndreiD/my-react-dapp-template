@@ -11,13 +11,7 @@ import AccountNetworkCard from './info/AccountNetworkCard';
 class Home extends React.Component {
 
   async componentDidMount() {
-    M.AutoInit();
-
-    const element = document.querySelector('#modal_splash');
-    let splashModalInstance = M.Modal.getInstance(element);
-    splashModalInstance.open();
-
-    this.props.initWeb3()
+    this.props.initWeb3();
   }
 
 
@@ -26,23 +20,8 @@ class Home extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <div id="modal_splash" className="modal">
-            <div className="modal-content">
-              <h4>WELCOME TO SUPER DAPP TEMPLATE</h4>
-              <p>At the moment we support Metamask. Please note that SUPPER DAPP does not gain access to your ETH or Tokens when you connect your wallet.</p>
-              <p>
-                MetaMask is a browser extension that allows you to access your wallet quickly, safely & easily. It is more secure because you never enter your private key on a website. It protects you from phishing & malicious websites.</p>
-              <p>This is a secure way to access your wallet.  <a target="_blank" rel="noopener noreferrer" href='https://metamask.io/'>OFFICIAL METAMASK WEBSITE</a>
-              </p>
-            </div>
-            <div className="modal-footer">
-              <button type="submit" className="modal-close waves-effect waves-green btn-flat">CLOSE</button>
-            </div>
-          </div>
-
 
           <AccountNetworkCard selectedAddress={this.props.selectedAddress} networkName={this.props.networkName} />
-
           <div className="col m6 offset-m3 s12">
             <Formik
               initialValues={{ eth_address: '' }}
@@ -70,10 +49,8 @@ class Home extends React.Component {
                         </div>
                       </div>
                     </Form>
-
                   </div>
                 </div>
-
               )}
             />
             <BalanceCard tokenBalance={this.props.tokenBalance} />
