@@ -1,32 +1,68 @@
 import Web3 from "web3";
+import getWeb3 from '../utils/getWeb3'
+import {
+  WEB3_CONNECTED,
+  RECEIVED_ERROR,
+  SET_LOADING,
+  FETCHED_TOKEN_BALANCE
+} from './types'
+import getNetworkName from "../utils/other";
+
+export const web3Connect = () => async (dispatch) => {
+  try {
+    const web3 = await getWeb3();
+    web3.currentProvider.publicConfigStore.on(
+      'update',
+      ({
+        networkVersion,
+        selectedAddress
+      }) => {
+        return dispatch({
+          type: WEB3_CONNECTED,
+          payload: {
+            "selectedAddress": selectedAddress,
+            "networkName": getNetworkName(networkVersion),
+          },
+        })
+      }
+    )
+  } catch (error) {
+    console.log('err', error)
+    return dispatch({
+      type: RECEIVED_ERROR,
+      payload: "unable to connect to metamask",
+    });
+  }
+}
+
+
+
 
 export const getEthBalance = (address) => {
   return dispatch => {
-
     dispatch({
-      type: "SET_LOADING",
+      type: SET_LOADING,
       payload: true,
     });
 
     const web3 = new Web3(window.web3.currentProvider);
     if (!web3.utils.isAddress(address)) {
       return dispatch({
-        type: "RECEIVED_ERROR",
+        type: RECEIVED_ERROR,
         payload: "Invalid ETH address",
       });
     }
-
 
     web3.eth.getBalance(address, function (error, wei) {
       if (!error) {
         var balance = window.web3.fromWei(wei, 'ether');
         return dispatch({
-          type: "FETCHED_TOKEN_BALANCE",
+          type: FETCHED_TOKEN_BALANCE,
           payload: balance + " Tokens",
         });
       } else {
         return dispatch({
-          type: "RECEIVED_ERROR",
+          type: RECEIVED_ERROR,
           payload: error.toString(),
         });
       }

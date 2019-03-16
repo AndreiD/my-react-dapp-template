@@ -1,19 +1,15 @@
 import React from 'react';
 
 function AccountNetworkCard(props) {
-  if (!props.networkName) {
+  if (!props.networkName || !props.selectedAddress) {
     return null;
   }
+  // mask account ?
+  var maskedAddress = props.selectedAddress.substr(0, 5) + '***' + props.selectedAddress.substr(38, props.selectedAddress.length)
   return (
-    <div className="row">
-      <div className="col s6 offset-s3">
-        <div className="card green darken-3">
-          <div className="card-content white-text">
-            {props.networkName && <span className="card-title"><i className=" material-icons left white-text">network_check</i> Network: {props.networkName}</span>}
-            {props.account && <p><i className=" material-icons left white-text">account_box</i> Account: {props.account}</p>}
-          </div>
-        </div>
-      </div>
+    <div className="right-align grey-text" style={{ margin: "10px" }}>
+      {props.networkName && <span className="card-title"><i className="material-icons left white-text">network_check</i> network: {props.networkName}</span>}
+      {maskedAddress && <span><i className="material-icons left white-text">account_box</i> account: {maskedAddress}</span>}
     </div>
   );
 }

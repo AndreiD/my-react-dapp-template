@@ -7,7 +7,7 @@ const Header = () => {
         <a href="/" className="brand-logo">Super DAPP</a>
         <div>
           <ul className="right">
-            <li><a href='/'><i className="material-icons left">add_circle</i>Action</a></li>
+            <li><a href='/'><i className="material-icons left">add_circle</i>ACTION</a></li>
           </ul>
         </div>
       </div>
