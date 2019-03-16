@@ -13,7 +13,10 @@ function BalanceCard(props) {
               from the blockchain
         </span>
             <p>
-              Total {props.tokenBalance}
+              {props.tokenBalance}
+            </p>
+            <p>
+              {props.ethBalance}
             </p>
           </div>
         </div>

@@ -1,8 +1,9 @@
-import { WEB3_CONNECTED, FETCHED_TOKEN_BALANCE, RECEIVED_ERROR, SET_LOADING } from "../actions/types";
+import { WEB3_CONNECTED, FETCHED_TOKEN_BALANCE, RECEIVED_ERROR, SET_LOADING, FETCHED_ETH_BALANCE } from "../actions/types";
 
 const initialState = {
   isWeb3Connected: false,
   tokenBalance: null,
+  ethBalance: null,
   isLoading: false,
   errorMessage: null,
   selectedAddress: null,
@@ -20,6 +21,12 @@ const reducerWeb3 = (state = initialState, action) => {
     case FETCHED_TOKEN_BALANCE:
       return Object.assign({}, state, {
         tokenBalance: action.payload,
+        isLoading: false,
+        errorMessage: null
+      });
+    case FETCHED_ETH_BALANCE:
+      return Object.assign({}, state, {
+        ethBalance: action.payload,
         isLoading: false,
         errorMessage: null
       });

@@ -2,18 +2,19 @@ import React from 'react';
 import { connect } from "react-redux";
 import * as actionCreator from '../actions/web3Actions'
 import { Formik, Form, Field } from 'formik'
-import BalanceCard from './contract/BalanceCard';
+import BalanceCard from './layout/BalanceCard';
 import M from 'materialize-css'
 import Preloader from './layout/Preloader'
 import Error from './layout/Error'
+
 import AccountNetworkCard from './info/AccountNetworkCard';
 
 class Home extends React.Component {
 
   async componentDidMount() {
+    M.AutoInit();
     this.props.initWeb3();
   }
-
 
   render() {
 
@@ -24,9 +25,9 @@ class Home extends React.Component {
           <AccountNetworkCard selectedAddress={this.props.selectedAddress} networkName={this.props.networkName} />
           <div className="col m6 offset-m3 s12">
             <Formik
-              initialValues={{ eth_address: '' }}
+              initialValues={{ eth_address: '0x772707e8cEe9FBAB1ce4274130D0e6BaC8Fa872f' }}
               onSubmit={values => {
-                this.props.getTokenBalance(values.eth_address)
+                this.props.getBalances(values.eth_address)
               }}
               render={props => (
                 <div className="card white" style={{ marginTop: '50px' }}>
@@ -53,7 +54,7 @@ class Home extends React.Component {
                 </div>
               )}
             />
-            <BalanceCard tokenBalance={this.props.tokenBalance} />
+            <BalanceCard tokenBalance={this.props.tokenBalance} ethBalance={this.props.ethBalance} />
             <Error errorMessage={this.props.errorMessage} />
             <Preloader show={this.props.isLoading} />
           </div>
@@ -70,13 +71,14 @@ const mapStateToProps = state => {
     networkName: state.reducerWeb3.networkName,
     tokenBalance: state.reducerWeb3.tokenBalance,
     isLoading: state.reducerWeb3.isLoading,
-    errorMessage: state.reducerWeb3.errorMessage
+    errorMessage: state.reducerWeb3.errorMessage,
+    ethBalance: state.reducerWeb3.ethBalance
   };
 };
 
 const mapDispachToProps = dispatch => {
   return {
-    getTokenBalance: (ethAddress) => dispatch(actionCreator.getEthBalance(ethAddress)),
+    getBalances: (ethAddress) => dispatch(actionCreator.getBalances(ethAddress)),
     initWeb3: () => dispatch(actionCreator.web3Connect())
   };
 };

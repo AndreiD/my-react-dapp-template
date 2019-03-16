@@ -4,10 +4,12 @@ import {
   WEB3_CONNECTED,
   RECEIVED_ERROR,
   SET_LOADING,
-  FETCHED_TOKEN_BALANCE
+  FETCHED_TOKEN_BALANCE,
+  FETCHED_ETH_BALANCE
 } from './types'
 import getNetworkName from "../utils/other";
-
+import { MIN_ABI } from "../components/contract/abi";
+import { CONTRACT_ADDRESS } from "../components/contract/constants";
 
 
 
@@ -39,7 +41,7 @@ export const web3Connect = () => async (dispatch) => {
 }
 
 
-export const getEthBalance = (address) => {
+export const getBalances = (address) => {
   return dispatch => {
     dispatch({
       type: SET_LOADING,
@@ -54,12 +56,13 @@ export const getEthBalance = (address) => {
       });
     }
 
+    // Get the ETH balance
     web3.eth.getBalance(address, function (error, wei) {
       if (!error) {
         var balance = window.web3.fromWei(wei, 'ether');
-        return dispatch({
-          type: FETCHED_TOKEN_BALANCE,
-          payload: balance + " Tokens",
+        dispatch({
+          type: FETCHED_ETH_BALANCE,
+          payload: balance + " ETH",
         });
       } else {
         return dispatch({
@@ -68,6 +71,35 @@ export const getEthBalance = (address) => {
         });
       }
     });
+
+    // Get ERC20 Token contract instance
+    let contract = new web3.eth.Contract(MIN_ABI, CONTRACT_ADDRESS);
+    contract.methods.balanceOf(address).call()
+      .then(function (result) {
+        let balance = result.balance / 1E18; // 18 decimals is the standard
+        dispatch({
+          type: FETCHED_TOKEN_BALANCE,
+          payload: balance + " Tokens",
+        });
+
+      });
+
+
+    // web3.eth.getBalance(address, function (error, wei) {
+    //   if (!error) {
+    //     var balance = window.web3.fromWei(wei, 'ether');
+    //     dispatch({
+    //       type: FETCHED_ETH_BALANCE,
+    //       payload: balance + " Tokens",
+    //     });
+    //   } else {
+    //     return dispatch({
+    //       type: RECEIVED_ERROR,
+    //       payload: error.toString(),
+    //     });
+    //   }
+    // });
+
   }
 }
 
