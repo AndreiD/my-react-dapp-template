@@ -16,7 +16,6 @@ if you have any suggestions for improvement, please use the issues
     "react-select": "^2.4.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "truffle-contract": "^4.0.6",
     "web3": "1.0.0-beta.46"
   },
 ~~~~
