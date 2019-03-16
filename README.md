@@ -2,7 +2,7 @@
 
 ## still... some things can be improved
 
-I am always trying to improve the quality of the code we deliver to open source. One of the most effective ways there is for identifying improvements is by listening to your views and opinions.
+I am always trying to improve the quality of the code delivered to open source. One of the most effective ways there is for identifying improvements is by listening to your views and opinions.
 
 ### Click on <a href="https://github.com/AndreiD/my-react-dapp-template/issues">issues</a> to write a suggestion for improvement
 
@@ -22,4 +22,4 @@ I am always trying to improve the quality of the code we deliver to open source.
   },
 ~~~~
 
-License: MIT
+:cake: License: MIT
