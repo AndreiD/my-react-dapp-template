@@ -45,18 +45,30 @@ export const web3Connect = () => async (dispatch) => {
 
 export const getBalances = (address) => {
   return dispatch => {
+
+    if (!window.web3) {
+      return dispatch({
+        type: RECEIVED_ERROR,
+        payload: "Please install metamask.",
+      });
+    }
+
     dispatch({
       type: SET_LOADING,
       payload: true,
     });
 
     const web3 = new Web3(window.web3.currentProvider);
+
+
     if (!web3.utils.isAddress(address)) {
       return dispatch({
         type: RECEIVED_ERROR,
         payload: "Invalid ETH address",
       });
     }
+
+
 
     // Get the ETH balance
     web3.eth.getBalance(address, function (error, wei) {
